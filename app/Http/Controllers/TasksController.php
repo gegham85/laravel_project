@@ -8,6 +8,9 @@ class TasksController extends Controller
 {
 	public function index()
 	{
+		//query builder:
+		//$tasks = DB::table('tasks')->get();	
+		
 		$tasks = Task::all();
 		
 		return view('tasks.index', [
@@ -15,17 +18,20 @@ class TasksController extends Controller
 		]);
 	}
 	
-	public function show(Task $task) //Task::find($id);
+	// Route Model Binding
+	public function show(Task $task) //actually is going to do Task::find($id) for you; NOTE: laravel will expect primary key
 	{
-		
-		//helper function: dumps the given variables and ends execution of the script
-		//dd($task);
-		
 		//query builder:
 		//$task = DB::table('tasks')->find($id);
-		
+		// OR:
 		//$task = Task::find($id);
 		
+		return view('tasks.show', compact('task'));
+	}
+	
+	public function show_old_way($id)
+	{
+		$task = Task::find($id);
 		return view('tasks.show', compact('task'));
 	}
 	

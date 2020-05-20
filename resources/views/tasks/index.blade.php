@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts/master')
 
 @section('page_title') Tasks page @endsection
 
@@ -10,4 +10,6 @@
 	
 	@endforeach
 	</ul>     
+	
+	<example-component></example-component>
 @endsection

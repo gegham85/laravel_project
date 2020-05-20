@@ -1,38 +1,85 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+class Avvo
+{
+    private $example;
 
-Route::get('/', function () {
-    return view('welcome');
-    
+    public function __construct(Example $example)
+    {
+        $this->example = $example;
+    }
+
+    public function getFoo()
+    {
+        return $this->example->getSomething() . ' --> foo';
+    }
+}
+
+class Example
+{
+    public function getSomething() {
+        return 'somethoe';
+    }
+
+    public function avvo()
+    {
+        return new Avvo($this);
+    }
+}
+
+Route::get('/', function() {
+
+    $test = new Example($this);
+
+    echo $test->avvo()->getFoo();
+
 });
 
-Route::get('/about', function(){
-	return view('about')->with('name', 'some name');
+function test() {
+
+    try {
+        return 'yep something happened';
+    } catch (Exception $e) {
+        die('aaaaa');
+    } finally {
+        return 'return from finnally';
+    }
+}
+
+Route::get('/test', function() {
+    echo test();
 });
 
-/*
-Route::get('/tasks', function(){
 
-	//query builder:
-	//$tasks = DB::table('tasks')->get();	
-	
-	//eloquent (dedicated class):
-	$tasks = Task::all();
-	
-	return view('tasks.index', [
-		'tasks' => $tasks
-	]);
-});
-*/
-Route::get('/tasks', 'TasksController@index');
-Route::get('/tasks/{task}', 'TasksController@show');
+
+//Route::get('/about', function(){
+//	return view('about')->with('name', 'some name');
+//	//OR:
+//	//$name = 'using compact';
+//	//$age = '31';
+//	//return view('about', compact('name', 'age'));
+//});
+//
+//Route::get('/tasks', 'TasksController@index');
+//Route::get('/tasks/{task}', 'TasksController@show');
+//Route::get('/tasks_old_way/{task}', 'TasksController@show_old_way');
+//
+//
+//Route::get('/', 'PostsController@index')->name('home');
+//Route::get('/posts/create', 'PostsController@create');
+//Route::post('/posts', 'PostsController@store');
+//Route::get('/posts/{post}', 'PostsController@show');
+//
+//Route::get('/posts/tags/{tag}', 'TagsController@index');
+//
+//Route::post('posts/{post}/comments', 'CommentsController@store');
+//
+//Route::get('/register', 'RegistrationController@create');
+//Route::post('/register', 'RegistrationController@store');
+//
+//Route::get('/login', 'SessionsController@create')->name('login');
+//Route::post('/login', 'SessionsController@store');
+//Route::get('/logout', 'SessionsController@destroy');
+
+//Auth::routes();
+//Route::get('/home', 'HomeController@index')->name('home');
